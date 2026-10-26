@@ -493,19 +493,26 @@
     });
   });
 
-  /* ── header: the trades menu (hover opens it with a mouse; click, Escape and focus leaving close it) ── */
+  /* ── header: the trades menu (hover opens it with a mouse; click, Escape and focus leaving close it).
+     Closing while the pointer is still on it keeps it closed until the pointer leaves. ── */
   (function tradesMenu() {
     var item = $('[data-drop]');
     var btn = item && $('[data-drop-toggle]', item);
     if (!btn) return;
     var set = function (open) {
       item.classList.toggle('is-open', open);
+      item.classList.toggle('is-closed', !open && item.matches(':hover'));
       btn.setAttribute('aria-expanded', String(open));
     };
+    item.addEventListener('mouseleave', function () { item.classList.remove('is-closed'); });
     btn.addEventListener('click', function () { set(!item.classList.contains('is-open')); });
     document.addEventListener('click', function (e) { if (!item.contains(e.target)) set(false); });
+    // Escape also dismisses the panel opened by hover alone (WCAG 1.4.13); focus moves back only from inside the menu
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && item.classList.contains('is-open')) { set(false); btn.focus(); }
+      if (e.key !== 'Escape' || !(item.classList.contains('is-open') || item.matches(':hover'))) return;
+      var inside = item.contains(document.activeElement);
+      set(false);
+      if (inside) btn.focus();
     });
     item.addEventListener('focusout', function (e) { if (!item.contains(e.relatedTarget)) set(false); });
   })();

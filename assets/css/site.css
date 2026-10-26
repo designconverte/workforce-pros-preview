@@ -159,7 +159,7 @@ button, input, textarea { font: inherit; }
 .lockup__wf, .lockup__pros { padding-top: .1em; }
 .lockup__pros { padding-inline: .16em; background: var(--red); color: var(--white); }
 .hdr__nav { display: none; margin-left: auto; }
-.hdr__nav ul { display: flex; gap: 30px; }
+.hdr__nav > ul { display: flex; gap: 30px; }
 .hdr__nav a, .foot__nav a {
   font-size: .9375rem;
   font-weight: 600;
@@ -913,9 +913,6 @@ textarea.input { min-height: 96px; resize: vertical; }
 @media (min-width: 1024px) { .band--portrait .band__img { object-position: 58% 24%; } }
 
 .hero--about .beam { font-size: .5em; }
-@media (min-width: 1024px) {
-  .hero--about .band { grid-column: 3 / 6; margin: 0; }
-}
 
 @media (min-width: 1024px) {
   .hero--about .hero__copy, .hero--contact .hero__copy { grid-row: 2; align-self: start; padding-top: clamp(24px, 4vh, 44px); }
@@ -1069,7 +1066,7 @@ textarea.input { min-height: 96px; resize: vertical; }
 }
 .tmenu::before { content: ""; position: absolute; left: 0; right: 0; top: -24px; height: 24px; }
 .hdr__drop:hover .tmenu, .hdr__drop:focus-within .tmenu, .hdr__drop.is-open .tmenu { opacity: 1; visibility: visible; translate: 0 0; transition: opacity var(--dur-base) var(--ease-out), translate var(--dur-base) var(--ease-out), visibility 0s; }
-.js .hdr__drop:not(.is-open):not(:hover) .tmenu { opacity: 0; visibility: hidden; }
+.js .hdr__drop:not(.is-open):not(:hover) .tmenu, .js .hdr__drop.is-closed .tmenu { opacity: 0; visibility: hidden; }
 .tmenu__list { display: grid; grid-template-columns: 1fr 1fr; column-gap: 28px; }
 .hdr__nav .tmenu__list a { display: flex; align-items: baseline; gap: 12px; padding: 12px 0 10px; border-bottom: 1px solid var(--hair-dark); background: none; font-family: var(--f-display); font-size: 1.25rem; font-weight: 800; line-height: 1; text-transform: uppercase; color: var(--white); transition: color var(--dur-fast) var(--ease-out); }
 .tmenu__code { font-family: var(--f-mono); font-size: .6875rem; font-weight: 600; letter-spacing: .12em; color: var(--sand); }

@@ -24,7 +24,7 @@
 <link rel="apple-touch-icon" href="/workforce-pros-preview/assets/img/icon-180.png">
 <link rel="preload" href="/workforce-pros-preview/assets/fonts/big-shoulders-display-latin-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/workforce-pros-preview/assets/fonts/archivo-latin-var.woff2" as="font" type="font/woff2" crossorigin>
-
+<link rel="preload" as="image" href="/workforce-pros-preview/assets/img/crew-panel-1080.webp" imagesrcset="/workforce-pros-preview/assets/img/crew-panel-720.webp 720w, /workforce-pros-preview/assets/img/crew-panel-1080.webp 1080w, /workforce-pros-preview/assets/img/crew-panel-1440.webp 1440w, /workforce-pros-preview/assets/img/crew-panel-1920.webp 1920w" imagesizes="45vw" media="(min-width: 1024px)" fetchpriority="high">
 <link rel="stylesheet" href="/workforce-pros-preview/assets/css/fonts.css">
 <link rel="stylesheet" href="/workforce-pros-preview/assets/css/tokens.css">
 <link rel="stylesheet" href="/workforce-pros-preview/assets/css/form.css">
@@ -42,9 +42,9 @@
 
 <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><symbol id="i-arrow-right" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 12h16m0 0l-6-6m6 6l-6 6"/></symbol><symbol id="i-arrow-left" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 12H4m0 0l6-6m-6 6l6 6"/></symbol><symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6m0 0H9m9 0v9"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="m8.5 12.5l2 2l5-5"/></g></symbol><symbol id="i-pin" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 10.143C4 5.646 7.582 2 12 2s8 3.646 8 8.143c0 4.462-2.553 9.67-6.537 11.531a3.45 3.45 0 0 1-2.926 0C6.553 19.812 4 14.606 4 10.144Z"/><circle cx="12" cy="10" r="3"/></g></symbol><symbol id="i-users" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="6" r="4"/><path stroke-linecap="round" d="M15 9a3 3 0 1 0 0-6"/><ellipse cx="9" cy="17" rx="7" ry="4"/><path stroke-linecap="round" d="M18 14c1.754.385 3 1.359 3 2.5c0 1.03-1.014 1.923-2.5 2.37"/></g></symbol><symbol id="i-calendar" viewBox="0 0 24 24"><g fill="none"><path stroke="currentColor" stroke-width="1.5" d="M2 12c0-3.771 0-5.657 1.172-6.828S6.229 4 10 4h4c3.771 0 5.657 0 6.828 1.172S22 8.229 22 12v2c0 3.771 0 5.657-1.172 6.828S17.771 22 14 22h-4c-3.771 0-5.657 0-6.828-1.172S2 17.771 2 14z"/><path stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="M7 4V2.5M17 4V2.5M2.5 9h19"/><path fill="currentColor" d="M18 17a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0"/></g></symbol></svg>
 
-<a class="skip" href="#main">Skip to content</a>
+<a class="skip" href="#main" lang="en">Skip to content</a>
 
-<header class="hdr" data-hdr>
+<header class="hdr" data-hdr lang="en">
   <div class="wrap hdr__in">
     <a class="lockup" href="/workforce-pros-preview/" aria-label="Workforce Pros home">
       <img class="lockup__mark" src="/workforce-pros-preview/assets/img/emblem-120.webp" width="120" height="124" alt="">
@@ -73,7 +73,7 @@
         <li><a href="/workforce-pros-preview/join/" data-path="/join/">Join the team</a></li>
       </ul>
     </nav>
-    <a class="btn btn--primary btn--sm hdr__cta" href="#request" data-cta="header-hire" data-cta-location="header" data-focus-request>Hire a crew</a>
+    <a class="btn btn--primary btn--sm hdr__cta" href="#hire" data-cta="header-hire" data-cta-location="header" data-focus-request>Hire a crew</a>
     <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Open menu" data-menu-toggle>
       <span class="menu-btn__label" aria-hidden="true">Menu</span>
       <span class="menu-btn__icon" aria-hidden="true"><i></i><i></i></span>
@@ -84,7 +84,7 @@
 
 <main id="main">
 
-<section class="hero hero--about" aria-labelledby="hero-title" data-section="hero">
+<section class="hero hero--about" id="hire" aria-labelledby="hero-title" data-section="hero">
   <div class="hero__head">
     <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/workforce-pros-preview/">Home</a></li><li><span aria-current="page">About</span></li></ol></nav>
     <p class="tag">About Workforce Pros</p>
@@ -97,11 +97,140 @@
       <span class="beam"><span class="beam__bar">Between the people who build and the companies that need&nbsp;them.</span></span>
     </h1>
   </div>
+
+  <div class="hero__form" data-hero-form>
+
+<form class="qform" id="crew-hero" data-cs-form="crew-hero" data-cs-mode="steps" action="/workforce-pros-preview/api/lead.php" method="post" novalidate aria-labelledby="qf-title-hero"
+  data-cs-msg-network="We couldn't send your request. Check your connection and try again. Your details are still here."
+  data-cs-msg-server="Something went wrong on our end. Please try again in a minute."
+  data-cs-msg-rate="Too many tries in a row. Wait a minute and try again.">
+  <div class="qform__top">
+    <h2 class="qform__title" id="qf-title-hero">Hire a crew in 3&nbsp;steps</h2>
+    <ol class="stepper" data-cs-stepper aria-label="Progress">
+      <li data-cs-stepper-item="1" aria-current="step"><span class="sr-only">Step </span>1</li><li class="rail" data-cs-rail="1" aria-hidden="true"></li>
+      <li data-cs-stepper-item="2"><span class="sr-only">Step </span>2</li><li class="rail" data-cs-rail="2" aria-hidden="true"></li>
+      <li data-cs-stepper-item="3"><span class="sr-only">Step </span>3</li>
+    </ol>
+  </div>
+  <p class="sr-only" data-cs-live aria-live="polite"></p>
+  <div class="cs-hp" aria-hidden="true"><label for="hp-hero">Company website</label><input id="hp-hero" name="company_website" type="text" tabindex="-1" autocomplete="off"></div>
+
+  <div class="qstep" data-cs-step="1">
+    <p class="qstep__q">Where's the job&nbsp;site?</p>
+    <div class="zipline">
+      <div class="field">
+        <label class="lbl" for="zip-hero">Job site ZIP code</label>
+        <input class="input input--num" id="zip-hero" name="zip" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="5-digit ZIP" aria-describedby="zip-help-hero">
+      </div>
+      <button class="btn btn--primary btn--next" type="button" data-cs-next>Next <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"></use></svg></button>
+    </div>
+    <p class="help" id="zip-help-hero">Where the crew will work. We use it to plan your&nbsp;crew.</p>
+    <p class="err" data-cs-error-for="zip" hidden>Enter a 5-digit ZIP code.</p>
+  </div>
+
+  <div class="qstep" data-cs-step="2" hidden>
+    <p class="qstep__q">What crew do you&nbsp;need?</p>
+    <fieldset class="field">
+      <legend class="lbl">Trade</legend>
+      <div class="tiles">
+        <label class="tile"><input type="radio" name="service" value="general-construction"><span>General Construction</span></label>
+        <label class="tile"><input type="radio" name="service" value="painting"><span>Painting</span></label>
+        <label class="tile"><input type="radio" name="service" value="carpentry"><span>Carpentry</span></label>
+        <label class="tile"><input type="radio" name="service" value="hardscape"><span>Hardscape</span></label>
+        <label class="tile"><input type="radio" name="service" value="flooring"><span>Flooring</span></label>
+        <label class="tile"><input type="radio" name="service" value="masonry"><span>Masonry</span></label>
+        <label class="tile"><input type="radio" name="service" value="custom-woodwork"><span>Custom Woodwork</span></label>
+        <label class="tile"><input type="radio" name="service" value="remodeling"><span>Remodeling</span></label>
+        <label class="tile"><input type="radio" name="service" value="other"><span>Other</span></label>
+      </div>
+      <p class="help">Choose Other and tell us the trade in the details&nbsp;below.</p>
+      <p class="err" data-cs-error-for="service" hidden>Choose the trade you need.</p>
+    </fieldset>
+    <fieldset class="field">
+      <legend class="lbl">Crew size</legend>
+      <div class="chips">
+        <label class="chip"><input type="radio" name="crew_size" value="1-2"><span>1–2 pros</span></label>
+        <label class="chip"><input type="radio" name="crew_size" value="3-5"><span>3–5 pros</span></label>
+        <label class="chip"><input type="radio" name="crew_size" value="6-10"><span>6–10 pros</span></label>
+        <label class="chip"><input type="radio" name="crew_size" value="11-plus"><span>More than 10</span></label>
+        <label class="chip"><input type="radio" name="crew_size" value="not-sure"><span>Not sure yet</span></label>
+      </div>
+      <p class="err" data-cs-error-for="crew_size" hidden>Choose a crew size, or pick Not sure yet.</p>
+    </fieldset>
+    <fieldset class="field">
+      <legend class="lbl">Start date</legend>
+      <div class="chips">
+        <label class="chip"><input type="radio" name="start_window" value="asap"><span>As soon as possible</span></label>
+        <label class="chip"><input type="radio" name="start_window" value="within-week"><span>Within a week</span></label>
+        <label class="chip"><input type="radio" name="start_window" value="1-4-weeks"><span>1–4 weeks out</span></label>
+        <label class="chip"><input type="radio" name="start_window" value="month-plus"><span>More than a month out</span></label>
+        <label class="chip"><input type="radio" name="start_window" value="not-sure"><span>Not sure yet</span></label>
+      </div>
+      <p class="err" data-cs-error-for="start_window" hidden>Choose when you need the crew.</p>
+    </fieldset>
+    <div class="field">
+      <label class="lbl" for="details-hero">Job details <span class="opt">(optional)</span></label>
+      <textarea class="input" id="details-hero" name="details" rows="3" maxlength="1000" placeholder="Type of job, how many days or weeks, daily hours, residential or commercial, tools or gear the crew should bring…"></textarea>
+      <p class="err" data-cs-error-for="details" hidden>Keep the details under 1,000 characters.</p>
+    </div>
+    <div class="qactions">
+      <button class="btn btn--back" type="button" data-cs-back><svg class="ic" aria-hidden="true"><use href="#i-arrow-left"></use></svg>Back</button>
+      <button class="btn btn--primary" type="button" data-cs-next>Next <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"></use></svg></button>
+    </div>
+  </div>
+
+  <div class="qstep" data-cs-step="3" hidden>
+    <p class="qstep__q">Who should we contact about this&nbsp;crew?</p>
+    <div class="field">
+      <label class="lbl" for="name-hero">Full name</label>
+      <input class="input" id="name-hero" name="name" autocomplete="name" maxlength="100">
+      <p class="err" data-cs-error-for="name" hidden>Enter your full name.</p>
+    </div>
+    <div class="field">
+      <label class="lbl" for="company-hero">Company name</label>
+      <input class="input" id="company-hero" name="company" autocomplete="organization" maxlength="120" aria-describedby="company-help-hero">
+      <p class="help" id="company-help-hero">Working on your own? Use your business&nbsp;name.</p>
+      <p class="err" data-cs-error-for="company" hidden>Enter your company name.</p>
+    </div>
+    <div class="field">
+      <label class="lbl" for="phone-hero">Phone</label>
+      <input class="input input--num" id="phone-hero" name="phone" type="tel" inputmode="tel" autocomplete="tel">
+      <p class="err" data-cs-error-for="phone" hidden>Enter a 10-digit phone number so we can reach you.</p>
+    </div>
+    <div class="field">
+      <label class="lbl" for="email-hero">Email</label>
+      <input class="input" id="email-hero" name="email" type="email" autocomplete="email" maxlength="254">
+      <p class="err" data-cs-error-for="email" hidden>Enter a valid email address.</p>
+    </div>
+    <fieldset class="consent">
+      <legend>Text messages (optional)</legend>
+      <label class="check"><input type="radio" name="sms_consent" value="yes"><span>Yes, I consent to receive recurring text messages from Workforce Pros about my crew requests and jobs, including scheduling, crew confirmations and job updates. Message frequency varies. Message and data rates may apply. Reply STOP to opt out or HELP for help. Consent is not a condition of purchase.</span></label>
+      <label class="check"><input type="radio" name="sms_consent" value="no"><span>No, I don't want text messages.</span></label>
+      <p class="consent__legal">See our Privacy Policy and Terms.</p>
+    </fieldset>
+    <p class="qstatus" data-cs-status role="alert" hidden></p>
+    <div class="qactions">
+      <button class="btn btn--back" type="button" data-cs-back><svg class="ic" aria-hidden="true"><use href="#i-arrow-left"></use></svg>Back</button>
+      <button class="btn btn--primary" type="submit" data-cs-loading-label="Sending…">Request my crew <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"></use></svg></button>
+    </div>
+    <p class="note">By sending this request, you agree to our Terms and Privacy&nbsp;Policy.</p>
+  </div>
+
+  <div class="qdone" data-cs-step="done" hidden>
+    <svg class="ic qdone__ic" aria-hidden="true"><use href="#i-check"></use></svg>
+    <h3 class="qdone__title" tabindex="-1">Thanks. Your crew request is&nbsp;in.</h3>
+    <p>What happens next: we review the trade, crew size, start date and job site you&nbsp;sent.</p>
+    <p class="qdone__tip">To speed things up, have the job site address, daily hours and an on-site contact&nbsp;ready.</p>
+  </div>
+</form>
+
+  </div>
+
   <div class="hero__copy">
     <p class="hero__lead">Workforce Pros rents construction labor to companies: contractors, builders and construction firms. We put crews together in eight trades, and every pro on the crew is treated like a&nbsp;pro.</p>
     <div class="door">
-      <p class="door__line"><span class="door__q">Need a crew?</span> <a href="#request" data-cta="hero-hire" data-cta-location="hero">Hire a crew<svg class="ic" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a></p>
       <p class="door__line"><span class="door__q">Looking for work?</span> <a href="/workforce-pros-preview/join/" data-cta="hero-join-en" data-cta-location="hero">Join the team<svg class="ic" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a></p>
+      <p class="door__line" lang="es"><span class="door__q">¿Buscas trabajo?</span> <a href="/workforce-pros-preview/unete/" data-cta="hero-join-es" data-cta-location="hero">Únete al equipo<svg class="ic" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a></p>
     </div>
   </div>
   <figure class="band" data-band>
@@ -324,7 +453,7 @@
 
 </main>
 
-<footer class="foot" data-section="footer">
+<footer class="foot" data-section="footer" lang="en">
   <div class="wrap">
     <p class="foot__slogan" data-slogan><span class="foot__l"><span class="foot__in">Human power,</span></span> <span class="foot__l"><span class="foot__in"><span class="foot__smart">smart</span> results.</span></span></p>
     <div class="foot__grid">
@@ -352,7 +481,7 @@
       <nav class="foot__nav" aria-label="Company">
         <p class="foot__k">Workforce Pros</p>
         <ul>
-          <li><a href="#request" data-cta="footer-hire" data-cta-location="footer" data-focus-request>Hire a crew</a></li>
+          <li><a href="#hire" data-cta="footer-hire" data-cta-location="footer" data-focus-request>Hire a crew</a></li>
           <li><a href="/workforce-pros-preview/about/" data-path="/about/" aria-current="page">About</a></li>
           <li><a href="/workforce-pros-preview/contact/" data-path="/contact/">Contact</a></li>
           <li><a href="/workforce-pros-preview/join/" data-path="/join/" data-cta="footer-join-en" data-cta-location="footer">Join the team</a></li>
@@ -367,7 +496,7 @@
   </div>
 </footer>
 
-<div class="smenu" id="site-menu" role="dialog" aria-modal="true" aria-label="Menu" data-menu>
+<div class="smenu" id="site-menu" role="dialog" aria-modal="true" aria-label="Menu" data-menu lang="en">
   <nav class="smenu__nav" aria-label="Mobile">
     <ul class="smenu__list">
       <li><a class="smenu__link" href="/workforce-pros-preview/#trades"><span class="smenu__n" aria-hidden="true">01</span>Trades</a></li>
@@ -388,14 +517,14 @@
     </ul>
   </nav>
   <div class="smenu__foot">
-    <a class="btn btn--primary btn--block" href="#request" data-cta="menu-hire" data-cta-location="menu" data-focus-request>Hire a crew</a>
+    <a class="btn btn--primary btn--block" href="#hire" data-cta="menu-hire" data-cta-location="menu" data-focus-request>Hire a crew</a>
     <a class="smenu__es" href="/workforce-pros-preview/unete/" lang="es">¿Buscas trabajo? <b>Únete al equipo</b></a>
   </div>
   <span class="smenu__stripe" aria-hidden="true"></span>
 </div>
 
 <div class="mbar" data-mbar>
-  <a class="btn btn--primary btn--block" href="#request" data-float data-float-type="hire" data-cta-location="mobile-bar" data-focus-request>Hire a crew <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+  <a class="btn btn--primary btn--block" href="#hire" data-float data-float-type="hire" data-cta-location="mobile-bar" data-focus-request>Hire a crew <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
 </div>
 
 </body>
