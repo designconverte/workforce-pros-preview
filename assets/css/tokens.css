@@ -1,0 +1,67 @@
+
+:root {
+
+  --night: #071a2e;
+  --navy: #0a2f55;
+  --navy-2: #1d3550;
+  --navy-3: #3a5373;
+  --red: #d7001a;
+  --red-deep: #b00016;
+  --white: #fbfaf7;
+  --concrete: #e7e3da;
+  --line: #d9d4c8;
+  --sand: #b8b2a4;
+  --steel: #5e6b7a;
+  --rebar: #3f4c5c;
+  --flare: #ff5468;
+
+  --bg: var(--white);
+  --ink: var(--night);
+  --muted: var(--steel);
+  --field-border: var(--night);
+  --field-focus: var(--red);
+  --ring: 0 0 0 3px rgb(215 0 26 / .2);
+  --focus: var(--night);
+  --focus-on-dark: var(--white);
+  --error: var(--red-deep);
+
+  --f-display: 'Big Shoulders Display', 'Arial Narrow', 'Roboto Condensed', Impact, sans-serif;
+  --f-body: 'Archivo', 'Segoe UI', system-ui, -apple-system, Roboto, Arial, sans-serif;
+  --f-mono: 'IBM Plex Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
+
+  --t-display: clamp(4rem, 1.4rem + 10.4vw, 10rem);
+  --t-h1: clamp(3rem, 1.75rem + 5vw, 5.5rem);
+  --t-h2: clamp(2.25rem, 1.85rem + 1.6vw, 3rem);
+  --t-h3: clamp(1.25rem, 1.15rem + .4vw, 1.5rem);
+  --t-lead: 1.25rem;
+  --t-body: 1.125rem;
+  --t-small: .9375rem;
+  --t-label: .75rem;
+  --lh-display: .82;
+  --lh-h1: .88;
+  --lh-h2: .95;
+  --lh-h3: 1.2;
+  --lh-body: 1.55;
+  --w-display: 900;
+  --w-heading: 800;
+  --track-label: .14em;
+  --track-tag: .12em;
+
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 24px; --s-6: 32px; --s-7: 48px; --s-8: 72px; --s-9: 112px;
+  --r: 0;
+  --r-round: 50%;
+  --bw: 2px;
+  --bw-hair: 1.5px;
+  --shadow-btn: 5px 5px 0 var(--night);
+  --shadow-btn-hover: 7px 7px 0 var(--night);
+  --shadow-btn-press: 2px 2px 0 var(--night);
+  --shadow-card-accent: 8px 8px 0 var(--red);
+  --stripe-angle: 45deg;
+  --seal-tilt: 12deg;
+
+  --dur-press: 120ms;
+  --dur-fast: 160ms;
+  --dur-base: 280ms;
+  --dur-reveal: 640ms;
+  --ease-out: cubic-bezier(.2, .7, .2, 1);
+}

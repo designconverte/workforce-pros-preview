@@ -1,0 +1,53 @@
+
+
+[data-cs-form] [hidden] {
+  display: none !important;
+}
+
+[data-cs-form] input[name="company_website"],
+[data-cs-form] .cs-hp {
+  position: absolute !important;
+  left: -10000px !important;
+  top: auto !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+}
+
+:where([data-cs-form] [data-cs-rail]) {
+  position: relative;
+  overflow: hidden;
+}
+
+:where([data-cs-form] [data-cs-rail])::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--cs-form-accent, currentColor);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--cs-form-duration, 200ms) ease-out;
+}
+
+:where([data-cs-form] [data-cs-rail].is-filled)::after {
+  transform: scaleX(1);
+}
+
+:where([data-cs-form] [data-cs-stepper-item][aria-current="step"], [data-cs-form] [data-cs-stepper-item].is-done) {
+  color: var(--cs-form-accent, inherit);
+}
+
+:where([data-cs-form][aria-busy="true"]) :where([type="submit"]) {
+  cursor: progress;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-cs-form] *,
+  [data-cs-form] *::before,
+  [data-cs-form] *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
