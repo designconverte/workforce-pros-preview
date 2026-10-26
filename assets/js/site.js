@@ -60,6 +60,7 @@
   var board = (function () {
     var el = $('[data-flaps]');
     var srText = $('[data-flaps-text]');
+    var isStatic = el && el.hasAttribute('data-flaps-static');
     if (!el) return { show: function () {}, boot: function () {}, setInstant: function () {} };
     var SLOTS = 12;
     var DRUM = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -78,6 +79,7 @@
       };
       return { node: node, c: node.getAttribute('data-c') || ' ', target: null, spins: 0, busy: false, under: make('flap__h--under'), fall: make('flap__h--fall'), rise: make('flap__h--rise') };
     });
+    SLOTS = tiles.length;
     current = tiles.map(function (t) { return t.c; }).join('');
 
     var pad = function (word) {
@@ -150,6 +152,7 @@
       }, { threshold: 0.6 }).observe(el);
     }
     var show = function (word, label) {
+      if (isStatic) return;
       if (label && srText) srText.textContent = label;
       if (pad(word) === current && !pending) return;
       if (!visible && canAnimate) { pending = word; return; }
@@ -230,17 +233,18 @@
 
   /* ── trade preselection (rack cells and ?trade= for ad groups) ── */
   var SERVICE_RE = /^[a-z-]{2,40}$/;
-  var preselect = function (value) {
+  var preselect = function (value, only) {
     if (!value || !SERVICE_RE.test(value)) return null;
     var label = '';
-    crewForms.forEach(function (form) {
+    var forms = only && !/^crew-/.test(only.getAttribute('data-cs-form') || '') ? [only] : crewForms;
+    forms.forEach(function (form) {
       var radio = form.querySelector('input[name="service"][value="' + value + '"]');
       if (radio) { radio.checked = true; label = label || labelOf(radio); }
     });
     return label || null;
   };
   try {
-    var fromAd = new URLSearchParams(window.location.search).get('trade');
+    var fromAd = new URLSearchParams(window.location.search).get('trade') || document.body.getAttribute('data-trade');
     var adLabel = preselect(fromAd);
     if (adLabel && BOARD_WORD[fromAd]) {
       board.setInstant(BOARD_WORD[fromAd], BOARD_WORD[fromAd]);
@@ -255,27 +259,37 @@
   var late = window.performance && performance.now() > 2600;
   if (!late) board.boot();
 
-  /* ── "Hire a crew": scroll to the request form, then put the cursor on its current step ── */
-  var heroSection = $('#hire');
-  var focusRequest = function () {
-    var form = $('#crew-hero');
+  /* ── links to a section of this page (also "/#how" while on the home) ── */
+  var samePageHash = function (a) {
+    if (!a.hash || a.hash.length < 2) return null;
+    if (a.pathname.replace(/index\.html$/, '') !== window.location.pathname.replace(/index\.html$/, '') || a.host !== window.location.host) return null;
+    return a.hash;
+  };
+
+  /* ── "Hire a crew" / "Apply": scroll to the form of this page and put the cursor on its current step;
+     a cell of the trades board checks its trade first. A link to another page (/contact/) just navigates. ── */
+  var focusForm = function (form) {
     if (!form) return;
-    var step = $('[data-cs-step]:not([hidden])', form);
-    var field = step && $('input:not([type="hidden"]):not([tabindex="-1"]), textarea', step);
+    var step = $('[data-cs-step]:not([hidden])', form) || form;
+    var field = $('input:not([type="hidden"]):not([tabindex="-1"]), textarea', step);
     if (!field) return;
     var checked = field.type === 'radio' && $('input[name="' + field.name + '"]:checked', step);
     focusQuietly(checked || field);
   };
   $$('[data-focus-request]').forEach(function (link) {
     link.addEventListener('click', function (e) {
+      var hash = samePageHash(link);
+      var target = hash && document.getElementById(hash.slice(1));
+      if (!target) return;
+      var form = target.matches('form') ? target : $('form[data-cs-form]', target);
       var trade = link.getAttribute('data-trade');
       if (trade) {
-        var label = preselect(trade);
+        var label = preselect(trade, form);
         if (label) onTrade(trade, label);
       }
       e.preventDefault();
-      if (window.history && window.history.pushState && window.location.hash !== '#hire') window.history.pushState(null, '', '#hire');
-      scrollToEl(heroSection, focusRequest);
+      if (window.history && window.history.pushState && window.location.hash !== hash) window.history.pushState(null, '', hash);
+      scrollToEl(target, function () { focusForm(form); });
     });
   });
 
@@ -316,14 +330,15 @@
   var updateBar = function () {
     if (mbar) mbar.classList.toggle('is-visible', pastHero && others.size === 0 && !menuOpen);
   };
-  if (hasIO && heroForm) {
+  var heroRef = heroForm || $('.hero');
+  if (hasIO && heroRef) {
     new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
-        if (hdrCta) hdrCta.classList.toggle('is-quiet', entry.isIntersecting);
+        if (hdrCta && heroForm) hdrCta.classList.toggle('is-quiet', entry.isIntersecting);
         pastHero = !entry.isIntersecting && entry.boundingClientRect.top < 0;
       });
       updateBar();
-    }).observe(heroForm);
+    }).observe(heroRef);
     var otherIo = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) others.add(entry.target); else others.delete(entry.target);
@@ -453,13 +468,14 @@
   })();
 
   /* ── in-page links: #join / #unete pick the language first; with smooth scrolling every anchor goes through it ── */
-  $$('a[href^="#"]').forEach(function (link) {
+  $$('a[href*="#"]').forEach(function (link) {
     if (link.hasAttribute('data-focus-request')) return;
-    var href = link.getAttribute('href');
-    if (href.length < 2) return;
+    var href = samePageHash(link);
+    if (!href) return;
     link.addEventListener('click', function (e) {
       var target;
-      if ((href === '#join' || href === '#unete') && langs) {
+      var isLang = (href === '#join' || href === '#unete') && langs;
+      if (isLang) {
         langs.select(href === '#unete' ? 'es' : 'en', false);
         target = langs.section;
       } else {
@@ -467,16 +483,32 @@
       }
       if (!target) return;
       var focusJoin = link.hasAttribute('data-focus-join');
-      if (!lenis && !focusJoin && !(href === '#join' || href === '#unete')) return;
+      if (!lenis && !focusJoin && !isLang) return;
       e.preventDefault();
       if (window.history && window.history.pushState) window.history.pushState(null, '', href);
       scrollToEl(target, function () {
         if (!focusJoin) return;
-        var first = $('input[name="service"]', target);
-        focusQuietly(first);
+        focusQuietly($('input[name="service"]', target));
       });
     });
   });
+
+  /* ── header: the trades menu (hover opens it with a mouse; click, Escape and focus leaving close it) ── */
+  (function tradesMenu() {
+    var item = $('[data-drop]');
+    var btn = item && $('[data-drop-toggle]', item);
+    if (!btn) return;
+    var set = function (open) {
+      item.classList.toggle('is-open', open);
+      btn.setAttribute('aria-expanded', String(open));
+    };
+    btn.addEventListener('click', function () { set(!item.classList.contains('is-open')); });
+    document.addEventListener('click', function (e) { if (!item.contains(e.target)) set(false); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && item.classList.contains('is-open')) { set(false); btn.focus(); }
+    });
+    item.addEventListener('focusout', function (e) { if (!item.contains(e.relatedTarget)) set(false); });
+  })();
 
   if (!hasGsap || reduceMotion) return;
 

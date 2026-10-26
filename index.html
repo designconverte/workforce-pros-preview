@@ -52,10 +52,25 @@
     </a>
     <nav class="hdr__nav" aria-label="Main">
       <ul>
-        <li><a href="#trades">Trades</a></li>
-        <li><a href="#how">How it works</a></li>
-        <li><a href="#faq">FAQ</a></li>
-        <li><a href="#join">Join the team</a></li>
+        <li class="hdr__drop" data-drop>
+          <button class="hdr__dropbtn" type="button" aria-expanded="false" aria-controls="trades-menu" data-drop-toggle>Trades<span class="hdr__chev" aria-hidden="true"></span></button>
+          <div class="tmenu" id="trades-menu" data-drop-panel>
+            <ul class="tmenu__list">
+            <li><a href="/workforce-pros-preview/trades/general-construction/" data-path="/trades/general-construction/"><span class="tmenu__code" aria-hidden="true">T/01</span>General Construction</a></li>
+            <li><a href="/workforce-pros-preview/trades/painting/" data-path="/trades/painting/"><span class="tmenu__code" aria-hidden="true">T/02</span>Painting</a></li>
+            <li><a href="/workforce-pros-preview/trades/carpentry/" data-path="/trades/carpentry/"><span class="tmenu__code" aria-hidden="true">T/03</span>Carpentry</a></li>
+            <li><a href="/workforce-pros-preview/trades/hardscape/" data-path="/trades/hardscape/"><span class="tmenu__code" aria-hidden="true">T/04</span>Hardscape</a></li>
+            <li><a href="/workforce-pros-preview/trades/flooring/" data-path="/trades/flooring/"><span class="tmenu__code" aria-hidden="true">T/05</span>Flooring</a></li>
+            <li><a href="/workforce-pros-preview/trades/masonry/" data-path="/trades/masonry/"><span class="tmenu__code" aria-hidden="true">T/06</span>Masonry</a></li>
+            <li><a href="/workforce-pros-preview/trades/custom-woodwork/" data-path="/trades/custom-woodwork/"><span class="tmenu__code" aria-hidden="true">T/07</span>Custom Woodwork</a></li>
+            <li><a href="/workforce-pros-preview/trades/remodeling/" data-path="/trades/remodeling/"><span class="tmenu__code" aria-hidden="true">T/08</span>Remodeling</a></li>
+            </ul>
+          </div>
+        </li>
+        <li><a href="/workforce-pros-preview/#how">How it works</a></li>
+        <li><a href="/workforce-pros-preview/about/" data-path="/about/">About</a></li>
+        <li><a href="/workforce-pros-preview/contact/" data-path="/contact/">Contact</a></li>
+        <li><a href="/workforce-pros-preview/join/" data-path="/join/">Join the team</a></li>
       </ul>
     </nav>
     <a class="btn btn--primary btn--sm hdr__cta" href="#hire" data-cta="header-hire" data-cta-location="header" data-focus-request>Hire a crew</a>
@@ -703,13 +718,29 @@
           <span class="lockup__word"><span class="lockup__wf">Workforce</span><span class="lockup__pros">Pros</span></span>
         </span>
         <p class="foot__desc">Construction labor rental</p>
+        <p class="foot__trades">Crews for general construction, painting, carpentry, hardscape, flooring, masonry, custom woodwork and&nbsp;remodeling.</p>
       </div>
-      <p class="foot__trades">Crews for general construction, painting, carpentry, hardscape, flooring, masonry, custom woodwork and&nbsp;remodeling.</p>
-      <nav class="foot__nav" aria-label="Footer">
+      <nav class="foot__nav" aria-label="Trades">
+        <p class="foot__k">Trades</p>
+        <ul class="foot__cols">
+          <li><a href="/workforce-pros-preview/trades/general-construction/" data-path="/trades/general-construction/">General Construction</a></li>
+          <li><a href="/workforce-pros-preview/trades/painting/" data-path="/trades/painting/">Painting</a></li>
+          <li><a href="/workforce-pros-preview/trades/carpentry/" data-path="/trades/carpentry/">Carpentry</a></li>
+          <li><a href="/workforce-pros-preview/trades/hardscape/" data-path="/trades/hardscape/">Hardscape</a></li>
+          <li><a href="/workforce-pros-preview/trades/flooring/" data-path="/trades/flooring/">Flooring</a></li>
+          <li><a href="/workforce-pros-preview/trades/masonry/" data-path="/trades/masonry/">Masonry</a></li>
+          <li><a href="/workforce-pros-preview/trades/custom-woodwork/" data-path="/trades/custom-woodwork/">Custom Woodwork</a></li>
+          <li><a href="/workforce-pros-preview/trades/remodeling/" data-path="/trades/remodeling/">Remodeling</a></li>
+        </ul>
+      </nav>
+      <nav class="foot__nav" aria-label="Company">
+        <p class="foot__k">Workforce Pros</p>
         <ul>
           <li><a href="#hire" data-cta="footer-hire" data-cta-location="footer" data-focus-request>Hire a crew</a></li>
-          <li><a href="#join" data-cta="footer-join-en" data-cta-location="footer">Join the team</a></li>
-          <li lang="es"><a href="#unete" data-cta="footer-join-es" data-cta-location="footer">Únete al equipo</a></li>
+          <li><a href="/workforce-pros-preview/about/" data-path="/about/">About</a></li>
+          <li><a href="/workforce-pros-preview/contact/" data-path="/contact/">Contact</a></li>
+          <li><a href="/workforce-pros-preview/join/" data-path="/join/" data-cta="footer-join-en" data-cta-location="footer">Join the team</a></li>
+          <li lang="es"><a href="/workforce-pros-preview/unete/" data-path="/unete/" data-cta="footer-join-es" data-cta-location="footer">Únete al equipo</a></li>
         </ul>
       </nav>
     </div>
@@ -723,15 +754,26 @@
 <div class="smenu" id="site-menu" role="dialog" aria-modal="true" aria-label="Menu" data-menu>
   <nav class="smenu__nav" aria-label="Mobile">
     <ul class="smenu__list">
-      <li><a class="smenu__link" href="#trades"><span class="smenu__n" aria-hidden="true">01</span>Trades</a></li>
-      <li><a class="smenu__link" href="#how"><span class="smenu__n" aria-hidden="true">02</span>How it works</a></li>
-      <li><a class="smenu__link" href="#faq"><span class="smenu__n" aria-hidden="true">03</span>FAQ</a></li>
-      <li><a class="smenu__link" href="#join"><span class="smenu__n" aria-hidden="true">04</span>Join the team</a></li>
+      <li><a class="smenu__link" href="/workforce-pros-preview/#trades"><span class="smenu__n" aria-hidden="true">01</span>Trades</a></li>
+      <li><a class="smenu__link" href="/workforce-pros-preview/#how"><span class="smenu__n" aria-hidden="true">02</span>How it works</a></li>
+      <li><a class="smenu__link" href="/workforce-pros-preview/about/" data-path="/about/"><span class="smenu__n" aria-hidden="true">03</span>About</a></li>
+      <li><a class="smenu__link" href="/workforce-pros-preview/contact/" data-path="/contact/"><span class="smenu__n" aria-hidden="true">04</span>Contact</a></li>
+      <li><a class="smenu__link" href="/workforce-pros-preview/join/" data-path="/join/"><span class="smenu__n" aria-hidden="true">05</span>Join the team</a></li>
+    </ul>
+    <ul class="smenu__trades" aria-label="Trades">
+        <li><a href="/workforce-pros-preview/trades/general-construction/" data-path="/trades/general-construction/">General Construction</a></li>
+        <li><a href="/workforce-pros-preview/trades/painting/" data-path="/trades/painting/">Painting</a></li>
+        <li><a href="/workforce-pros-preview/trades/carpentry/" data-path="/trades/carpentry/">Carpentry</a></li>
+        <li><a href="/workforce-pros-preview/trades/hardscape/" data-path="/trades/hardscape/">Hardscape</a></li>
+        <li><a href="/workforce-pros-preview/trades/flooring/" data-path="/trades/flooring/">Flooring</a></li>
+        <li><a href="/workforce-pros-preview/trades/masonry/" data-path="/trades/masonry/">Masonry</a></li>
+        <li><a href="/workforce-pros-preview/trades/custom-woodwork/" data-path="/trades/custom-woodwork/">Custom Woodwork</a></li>
+        <li><a href="/workforce-pros-preview/trades/remodeling/" data-path="/trades/remodeling/">Remodeling</a></li>
     </ul>
   </nav>
   <div class="smenu__foot">
     <a class="btn btn--primary btn--block" href="#hire" data-cta="menu-hire" data-cta-location="menu" data-focus-request>Hire a crew</a>
-    <a class="smenu__es" href="#unete" lang="es">¿Buscas trabajo? <b>Únete al equipo</b></a>
+    <a class="smenu__es" href="/workforce-pros-preview/unete/" lang="es">¿Buscas trabajo? <b>Únete al equipo</b></a>
   </div>
   <span class="smenu__stripe" aria-hidden="true"></span>
 </div>
