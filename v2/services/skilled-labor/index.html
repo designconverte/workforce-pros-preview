@@ -47,7 +47,7 @@
 <header class="hdr" data-hdr lang="en">
   <div class="wrap hdr__in">
     <a class="lockup" href="/workforce-pros-preview/v2/" aria-label="Workforce Pros home">
-      <img class="lockup__mark" src="/workforce-pros-preview/v2/assets/img/emblem-dark.svg" width="120" height="124" alt="">
+      <img class="lockup__mark" src="/workforce-pros-preview/v2/assets/img/emblem-dark.svg" width="120" height="122" alt="">
       <span class="lockup__word" aria-hidden="true"><span class="lockup__wf">Workforce</span><span class="lockup__pros">Pros</span></span>
     </a>
     <nav class="hdr__nav" aria-label="Main">
@@ -117,22 +117,8 @@
   <div class="cs-hp" aria-hidden="true"><label for="hp-hero">Company website</label><input id="hp-hero" name="company_website" type="text" tabindex="-1" autocomplete="off"></div>
 
   <div class="qstep" data-cs-step="1">
-    <p class="qstep__q">Where's the job&nbsp;site?</p>
-    <div class="zipline">
-      <div class="field">
-        <label class="lbl" for="zip-hero">Job site ZIP code</label>
-        <input class="input input--num" id="zip-hero" name="zip" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="5-digit ZIP" aria-describedby="zip-help-hero">
-      </div>
-      <button class="btn btn--primary btn--next" type="button" data-cs-next>Next <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"></use></svg></button>
-    </div>
-    <p class="help" id="zip-help-hero">Where the crew would work. We use it to review your&nbsp;request.</p>
-    <p class="err" data-cs-error-for="zip" hidden>Enter a 5-digit ZIP code.</p>
-  </div>
-
-  <div class="qstep" data-cs-step="2" hidden>
-    <p class="qstep__q">What crew do you&nbsp;need?</p>
     <fieldset class="field">
-      <legend class="lbl">Labor</legend>
+      <legend class="qstep__q">What type of labor do you&nbsp;need?</legend>
       <div class="tiles">
         <label class="tile"><input type="radio" name="service" value="general-labor"><span>General Labor (helpers)</span></label>
         <label class="tile"><input type="radio" name="service" value="painting"><span>Painting</span></label>
@@ -142,11 +128,24 @@
         <label class="tile"><input type="radio" name="service" value="supervisor"><span>Supervisor</span></label>
         <label class="tile"><input type="radio" name="service" value="other"><span>Other</span></label>
       </div>
-      <p class="help">Need more than one? Pick the one that leads and list the rest in the details&nbsp;below.</p>
+      <p class="help">Need more than one? Pick the one that leads and list the rest in the job&nbsp;details.</p>
       <p class="err" data-cs-error-for="service" hidden>Choose the labor you need.</p>
     </fieldset>
+    <div class="field">
+      <label class="lbl" for="zip-hero">Job site ZIP code</label>
+      <input class="input input--num" id="zip-hero" name="zip" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="5-digit ZIP" aria-describedby="zip-help-hero">
+      <p class="help" id="zip-help-hero">Where the crew would work. We use it to review your&nbsp;request.</p>
+      <p class="err" data-cs-error-for="zip" hidden>Enter a 5-digit ZIP code.</p>
+    </div>
+    <div class="qactions">
+      <button class="btn btn--primary" type="button" data-cs-next>Next: job details <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"></use></svg></button>
+    </div>
+  </div>
+
+  <div class="qstep" data-cs-step="2" hidden>
+    <p class="qstep__q">Job details</p>
     <fieldset class="field">
-      <legend class="lbl">Crew size</legend>
+      <legend class="lbl">How many pros?</legend>
       <div class="chips">
         <label class="chip"><input type="radio" name="crew_size" value="1-2"><span>1–2 pros</span></label>
         <label class="chip"><input type="radio" name="crew_size" value="3-5"><span>3–5 pros</span></label>
@@ -157,7 +156,7 @@
       <p class="err" data-cs-error-for="crew_size" hidden>Choose a crew size, or pick Not sure yet.</p>
     </fieldset>
     <fieldset class="field">
-      <legend class="lbl">Start date</legend>
+      <legend class="lbl">When do you need them?</legend>
       <div class="chips">
         <label class="chip"><input type="radio" name="start_window" value="asap"><span>As soon as possible</span></label>
         <label class="chip"><input type="radio" name="start_window" value="within-week"><span>Within a week</span></label>
@@ -165,16 +164,17 @@
         <label class="chip"><input type="radio" name="start_window" value="month-plus"><span>More than a month out</span></label>
         <label class="chip"><input type="radio" name="start_window" value="not-sure"><span>Not sure yet</span></label>
       </div>
+      <p class="help">Not sure yet? Pick it. A rough request is a fine place to&nbsp;start.</p>
       <p class="err" data-cs-error-for="start_window" hidden>Choose when you need the crew.</p>
     </fieldset>
     <div class="field">
-      <label class="lbl" for="details-hero">Job details <span class="opt">(optional)</span></label>
+      <label class="lbl" for="details-hero">More details <span class="opt">(optional)</span></label>
       <textarea class="input" id="details-hero" name="details" rows="3" maxlength="1000" placeholder="Type of loss and phase of the job, how many days or weeks, daily hours, residential or commercial, gear the job calls for…"></textarea>
       <p class="err" data-cs-error-for="details" hidden>Keep the details under 1,000 characters.</p>
     </div>
     <div class="qactions">
       <button class="btn btn--back" type="button" data-cs-back><svg class="ic" aria-hidden="true"><use href="#i-arrow-left"></use></svg>Back</button>
-      <button class="btn btn--primary" type="button" data-cs-next>Next <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"></use></svg></button>
+      <button class="btn btn--primary" type="button" data-cs-next>Next: contact <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"></use></svg></button>
     </div>
   </div>
 
@@ -191,15 +191,21 @@
       <p class="help" id="company-help-hero">Working on your own? Use your business&nbsp;name.</p>
       <p class="err" data-cs-error-for="company" hidden>Enter your company name.</p>
     </div>
-    <div class="field">
-      <label class="lbl" for="phone-hero">Phone</label>
-      <input class="input input--num" id="phone-hero" name="phone" type="tel" inputmode="tel" autocomplete="tel">
-      <p class="err" data-cs-error-for="phone" hidden>Enter a 10-digit phone number so we can reach you.</p>
+    <div class="qpair">
+      <div class="field">
+        <label class="lbl" for="phone-hero">Phone</label>
+        <input class="input input--num" id="phone-hero" name="phone" type="tel" inputmode="tel" autocomplete="tel">
+        <p class="err" data-cs-error-for="phone" hidden>Enter a 10-digit phone number so we can reach you.</p>
+      </div>
+      <div class="field">
+        <label class="lbl" for="email-hero">Email</label>
+        <input class="input" id="email-hero" name="email" type="email" autocomplete="email" maxlength="254">
+        <p class="err" data-cs-error-for="email" hidden>Enter a valid email address.</p>
+      </div>
     </div>
-    <div class="field">
-      <label class="lbl" for="email-hero">Email</label>
-      <input class="input" id="email-hero" name="email" type="email" autocomplete="email" maxlength="254">
-      <p class="err" data-cs-error-for="email" hidden>Enter a valid email address.</p>
+    <div class="qsum" data-request-summary hidden>
+      <p class="qsum__k">Your request</p>
+      <p class="qsum__v" data-request-summary-text></p>
     </div>
     <fieldset class="consent">
       <legend>Text messages (optional)</legend>
@@ -221,6 +227,8 @@
     <p>What happens next: we review the labor, crew size, start date and job site you sent. It's a request, not a booking, so no crew is confirmed&nbsp;yet.</p>
     <p class="qdone__tip">To speed things up, have the job site address, daily hours and an on-site contact&nbsp;ready.</p>
   </div>
+
+  <p class="qmicro"><svg class="ic" aria-hidden="true"><use href="#i-check"></use></svg><span>About 60 seconds. A request, not a contract: nothing is booked until we review it with&nbsp;you.</span></p>
 </form>
 
   </div>
@@ -337,22 +345,8 @@
   <div class="cs-hp" aria-hidden="true"><label for="hp-final">Company website</label><input id="hp-final" name="company_website" type="text" tabindex="-1" autocomplete="off"></div>
 
   <div class="qstep" data-cs-step="1">
-    <p class="qstep__q">Where's the job&nbsp;site?</p>
-    <div class="zipline">
-      <div class="field">
-        <label class="lbl" for="zip-final">Job site ZIP code</label>
-        <input class="input input--num" id="zip-final" name="zip" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="5-digit ZIP" aria-describedby="zip-help-final">
-      </div>
-      <button class="btn btn--primary btn--next" type="button" data-cs-next>Next <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"></use></svg></button>
-    </div>
-    <p class="help" id="zip-help-final">Where the crew would work. We use it to review your&nbsp;request.</p>
-    <p class="err" data-cs-error-for="zip" hidden>Enter a 5-digit ZIP code.</p>
-  </div>
-
-  <div class="qstep" data-cs-step="2" hidden>
-    <p class="qstep__q">What crew do you&nbsp;need?</p>
     <fieldset class="field">
-      <legend class="lbl">Labor</legend>
+      <legend class="qstep__q">What type of labor do you&nbsp;need?</legend>
       <div class="tiles">
         <label class="tile"><input type="radio" name="service" value="general-labor"><span>General Labor (helpers)</span></label>
         <label class="tile"><input type="radio" name="service" value="painting"><span>Painting</span></label>
@@ -362,11 +356,24 @@
         <label class="tile"><input type="radio" name="service" value="supervisor"><span>Supervisor</span></label>
         <label class="tile"><input type="radio" name="service" value="other"><span>Other</span></label>
       </div>
-      <p class="help">Need more than one? Pick the one that leads and list the rest in the details&nbsp;below.</p>
+      <p class="help">Need more than one? Pick the one that leads and list the rest in the job&nbsp;details.</p>
       <p class="err" data-cs-error-for="service" hidden>Choose the labor you need.</p>
     </fieldset>
+    <div class="field">
+      <label class="lbl" for="zip-final">Job site ZIP code</label>
+      <input class="input input--num" id="zip-final" name="zip" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="5-digit ZIP" aria-describedby="zip-help-final">
+      <p class="help" id="zip-help-final">Where the crew would work. We use it to review your&nbsp;request.</p>
+      <p class="err" data-cs-error-for="zip" hidden>Enter a 5-digit ZIP code.</p>
+    </div>
+    <div class="qactions">
+      <button class="btn btn--primary" type="button" data-cs-next>Next: job details <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"></use></svg></button>
+    </div>
+  </div>
+
+  <div class="qstep" data-cs-step="2" hidden>
+    <p class="qstep__q">Job details</p>
     <fieldset class="field">
-      <legend class="lbl">Crew size</legend>
+      <legend class="lbl">How many pros?</legend>
       <div class="chips">
         <label class="chip"><input type="radio" name="crew_size" value="1-2"><span>1–2 pros</span></label>
         <label class="chip"><input type="radio" name="crew_size" value="3-5"><span>3–5 pros</span></label>
@@ -377,7 +384,7 @@
       <p class="err" data-cs-error-for="crew_size" hidden>Choose a crew size, or pick Not sure yet.</p>
     </fieldset>
     <fieldset class="field">
-      <legend class="lbl">Start date</legend>
+      <legend class="lbl">When do you need them?</legend>
       <div class="chips">
         <label class="chip"><input type="radio" name="start_window" value="asap"><span>As soon as possible</span></label>
         <label class="chip"><input type="radio" name="start_window" value="within-week"><span>Within a week</span></label>
@@ -385,16 +392,17 @@
         <label class="chip"><input type="radio" name="start_window" value="month-plus"><span>More than a month out</span></label>
         <label class="chip"><input type="radio" name="start_window" value="not-sure"><span>Not sure yet</span></label>
       </div>
+      <p class="help">Not sure yet? Pick it. A rough request is a fine place to&nbsp;start.</p>
       <p class="err" data-cs-error-for="start_window" hidden>Choose when you need the crew.</p>
     </fieldset>
     <div class="field">
-      <label class="lbl" for="details-final">Job details <span class="opt">(optional)</span></label>
+      <label class="lbl" for="details-final">More details <span class="opt">(optional)</span></label>
       <textarea class="input" id="details-final" name="details" rows="3" maxlength="1000" placeholder="Type of loss and phase of the job, how many days or weeks, daily hours, residential or commercial, gear the job calls for…"></textarea>
       <p class="err" data-cs-error-for="details" hidden>Keep the details under 1,000 characters.</p>
     </div>
     <div class="qactions">
       <button class="btn btn--back" type="button" data-cs-back><svg class="ic" aria-hidden="true"><use href="#i-arrow-left"></use></svg>Back</button>
-      <button class="btn btn--primary" type="button" data-cs-next>Next <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"></use></svg></button>
+      <button class="btn btn--primary" type="button" data-cs-next>Next: contact <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"></use></svg></button>
     </div>
   </div>
 
@@ -411,15 +419,21 @@
       <p class="help" id="company-help-final">Working on your own? Use your business&nbsp;name.</p>
       <p class="err" data-cs-error-for="company" hidden>Enter your company name.</p>
     </div>
-    <div class="field">
-      <label class="lbl" for="phone-final">Phone</label>
-      <input class="input input--num" id="phone-final" name="phone" type="tel" inputmode="tel" autocomplete="tel">
-      <p class="err" data-cs-error-for="phone" hidden>Enter a 10-digit phone number so we can reach you.</p>
+    <div class="qpair">
+      <div class="field">
+        <label class="lbl" for="phone-final">Phone</label>
+        <input class="input input--num" id="phone-final" name="phone" type="tel" inputmode="tel" autocomplete="tel">
+        <p class="err" data-cs-error-for="phone" hidden>Enter a 10-digit phone number so we can reach you.</p>
+      </div>
+      <div class="field">
+        <label class="lbl" for="email-final">Email</label>
+        <input class="input" id="email-final" name="email" type="email" autocomplete="email" maxlength="254">
+        <p class="err" data-cs-error-for="email" hidden>Enter a valid email address.</p>
+      </div>
     </div>
-    <div class="field">
-      <label class="lbl" for="email-final">Email</label>
-      <input class="input" id="email-final" name="email" type="email" autocomplete="email" maxlength="254">
-      <p class="err" data-cs-error-for="email" hidden>Enter a valid email address.</p>
+    <div class="qsum" data-request-summary hidden>
+      <p class="qsum__k">Your request</p>
+      <p class="qsum__v" data-request-summary-text></p>
     </div>
     <fieldset class="consent">
       <legend>Text messages (optional)</legend>
@@ -441,6 +455,8 @@
     <p>What happens next: we review the labor, crew size, start date and job site you sent. It's a request, not a booking, so no crew is confirmed&nbsp;yet.</p>
     <p class="qdone__tip">To speed things up, have the job site address, daily hours and an on-site contact&nbsp;ready.</p>
   </div>
+
+  <p class="qmicro"><svg class="ic" aria-hidden="true"><use href="#i-check"></use></svg><span>About 60 seconds. A request, not a contract: nothing is booked until we review it with&nbsp;you.</span></p>
 </form>
 
     </div>
@@ -486,7 +502,7 @@
     <div class="foot__grid">
       <div class="foot__brand">
         <span class="lockup lockup--foot">
-          <img class="lockup__mark" src="/workforce-pros-preview/v2/assets/img/emblem-dark.svg" width="120" height="124" alt="" loading="lazy" decoding="async">
+          <img class="lockup__mark" src="/workforce-pros-preview/v2/assets/img/emblem-dark.svg" width="120" height="122" alt="" loading="lazy" decoding="async">
           <span class="lockup__word"><span class="lockup__wf">Workforce</span><span class="lockup__pros">Pros</span></span>
         </span>
         <p class="foot__desc">Restoration labor staffing</p>

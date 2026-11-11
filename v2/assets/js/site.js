@@ -1,6 +1,6 @@
 /* v2.js — page interactions and motion for the home.
    The split-flap board in the headline, the request state shared by the crew forms, the request ticket, header and
-   fixed bar, menu, English/Spanish switch, smooth scrolling and the motion system.
+   fixed bar, menu, the tape after the hero, smooth scrolling and the motion system.
    Every block looks for its own data-* hook and does nothing when it is missing. Content is never hidden in CSS:
    without JS, without GSAP or with reduced motion everything is visible in its final state. */
 (function () {
@@ -158,9 +158,36 @@
       if (!visible && canAnimate) { pending = word; return; }
       apply(word, function (i, ch) { return ch === ' ' ? (Math.random() < 0.5 ? 1 : 0) : 1 + Math.floor(Math.random() * 3); });
     };
+    /* calls back once every flap has stopped */
+    var whenIdle = function (cb) {
+      var check = function () {
+        if (tiles.some(function (t) { return t.busy; })) { setTimeout(check, 90); return; }
+        cb();
+      };
+      check();
+    };
+    /* data-flaps-cycle="water fire mold": on load the board runs through these words once and comes back to its own word,
+       then stays (about 5 s in all) */
+    var cycle = (el.getAttribute('data-flaps-cycle') || '').split(/\s+/).filter(Boolean);
+    var HOLD_MS = 650;
+    var runCycle = function () {
+      var seq = cycle.concat([current.trim()]);
+      var n = 0;
+      var next = function () {
+        var first = n === 0;
+        apply(seq[n], function (i, ch) {
+          if (ch === ' ') return Math.random() < 0.5 ? 1 : 0;
+          return first ? 3 + (i % 3) + Math.floor(Math.random() * 2) : 1 + Math.floor(Math.random() * 2);
+        });
+        n += 1;
+        if (n < seq.length) whenIdle(function () { setTimeout(next, HOLD_MS); });
+      };
+      next();
+    };
     /* first paint: every flap spins a few times and settles, left to right (about 1.3 s) */
     var boot = function () {
       if (!canAnimate) return;
+      if (cycle.length) { runCycle(); return; }
       var word = current;
       tiles.forEach(function (tile, i) {
         var ch = word.charAt(i);
@@ -178,7 +205,7 @@
     return { show: show, boot: boot, setInstant: setInstant };
   })();
 
-  /* the word the board settles on for each labor option: "supervisor" and "other" keep
+  /* the word the board settles on for each labor option (pages whose board turns; the home board is static): "supervisor" and "other" keep
      RESTORATION, since "Hire a supervisor crew." is not English. Longest word: RESTORATION (11 of 12 flaps). */
   var BOARD_WORD = {
     'general-labor': 'labor',
@@ -190,26 +217,43 @@
     other: 'restoration'
   };
 
-  /* ── the request: what the visitor has told us so far, from whichever crew form they use ── */
+  /* ── the request: what the visitor has told us so far, from whichever crew form they use ──
+     The ticket in "How it works" shows it (never the contact details), and step 3 of each form sums it up. */
   var crewForms = $$('form[data-cs-form^="crew-"]');
-  var ticketRows = {};
-  $$('[data-ticket] .ticket__row').forEach(function (row) { ticketRows[row.getAttribute('data-row')] = row; });
-  var EMPTY = { zip: 'Your ZIP', service: 'Your pick', crew_size: 'Your call', start_window: 'Your call' };
+  var ticketVals = {};
+  var EMPTY = {};
+  $$('[data-ticket] [data-v]').forEach(function (v) {
+    var key = v.getAttribute('data-v');
+    ticketVals[key] = v;
+    EMPTY[key] = v.textContent;
+  });
   var labelOf = function (input) {
     var span = input && input.parentNode && input.parentNode.querySelector('span');
     return span ? span.textContent.trim() : '';
   };
   var setTicket = function (key, value) {
-    var row = ticketRows[key];
-    var out = row && row.querySelector('[data-v]');
+    var out = ticketVals[key];
     if (!out) return;
     var text = value || EMPTY[key];
     if (out.textContent === text) return;
     out.textContent = text;
-    row.classList.toggle('is-set', !!value);
+    out.classList.toggle('is-set', !!value);
+    var row = out.closest('.ticket__row');
+    if (!row) return;
     row.classList.remove('is-pulse');
     void row.offsetWidth;
     if (value && !reduceMotion) row.classList.add('is-pulse');
+  };
+  var summarize = function (form) {
+    var box = $('[data-request-summary]', form);
+    var out = $('[data-request-summary-text]', form);
+    if (!box || !out) return;
+    var pick = function (name) { return labelOf($('input[name="' + name + '"]:checked', form)); };
+    var zipEl = $('input[name="zip"]', form);
+    var zip = zipEl ? zipEl.value.replace(/\D/g, '').slice(0, 5) : '';
+    var parts = [pick('service'), zip ? 'ZIP ' + zip : '', pick('crew_size'), pick('start_window')].filter(Boolean);
+    out.textContent = parts.join(' · ');
+    box.hidden = !parts.length;
   };
   var rackCells = $$('[data-rack] .trade');
   var markRack = function (value) {
@@ -227,9 +271,11 @@
       if (t.name === 'zip') setTicket('zip', (t.value || '').replace(/\D/g, '').slice(0, 5));
       else if (t.name === 'service' && t.checked) onTrade(t.value, labelOf(t));
       else if ((t.name === 'crew_size' || t.name === 'start_window') && t.checked) setTicket(t.name, labelOf(t));
+      if (t.name === 'zip' || t.name === 'service' || t.name === 'crew_size' || t.name === 'start_window') summarize(form);
     };
     form.addEventListener('input', read);
     form.addEventListener('change', read);
+    summarize(form);
   });
 
   /* ── trade preselection (rack cells and ?trade= for ad groups) ── */
@@ -241,6 +287,7 @@
     forms.forEach(function (form) {
       var radio = form.querySelector('input[name="service"][value="' + value + '"]');
       if (radio) { radio.checked = true; label = label || labelOf(radio); }
+      summarize(form);
     });
     return label || null;
   };
@@ -401,98 +448,35 @@
     window.addEventListener('pagehide', function () { closeMenu(false); });
   })();
 
-  /* ── English / Spanish switch in the workers block (#unete opens in Spanish) ── */
-  var langs = (function () {
-    var list = $('[data-langs]');
-    var section = $('#join');
-    var pill = $('.langs__pill', list || document);
-    var tabs = $$('[data-lang-tab]', list || document);
-    var panels = $$('[data-lang-panel]');
-    if (!list || !section || tabs.length < 2 || panels.length < 2) return null;
-    list.setAttribute('role', 'tablist');
-    var panelFor = function (lang) { return panels.filter(function (p) { return p.getAttribute('data-lang-panel') === lang; })[0]; };
-    tabs.forEach(function (tab) {
-      var panel = panelFor(tab.getAttribute('data-lang-tab'));
-      tab.setAttribute('role', 'tab');
-      if (panel) {
-        tab.setAttribute('aria-controls', panel.id);
-        panel.setAttribute('role', 'tabpanel');
-        panel.setAttribute('aria-labelledby', tab.id);
-      }
-    });
-    var current = null;
-    var movePill = function () {
-      var on = tabs.filter(function (t) { return t.getAttribute('aria-selected') === 'true'; })[0];
-      if (!on || !pill) return;
-      list.style.setProperty('--pill-x', on.offsetLeft + 'px');
-      list.style.setProperty('--pill-w', on.offsetWidth + 'px');
-    };
-    var select = function (lang, moveFocus) {
-      if (!panelFor(lang)) return;
-      current = lang;
-      tabs.forEach(function (tab) {
-        var on = tab.getAttribute('data-lang-tab') === lang;
-        tab.setAttribute('aria-selected', String(on));
-        tab.tabIndex = on ? 0 : -1;
-        if (on && moveFocus) tab.focus();
+  /* ── tape after the hero: it only runs with JS (CSS animation); pause button (WCAG 2.2.2); stops while off screen ── */
+  var tape = $('[data-tape]');
+  if (tape) {
+    var tapeBtn = $('[data-tape-toggle]', tape);
+    if (tapeBtn) {
+      tapeBtn.addEventListener('click', function () {
+        var paused = tapeBtn.getAttribute('aria-pressed') !== 'true';
+        tapeBtn.setAttribute('aria-pressed', String(paused));
+        tape.classList.toggle('is-paused', paused);
       });
-      panels.forEach(function (panel) { panel.hidden = panel.getAttribute('data-lang-panel') !== lang; });
-      var title = $('#workers-title-' + lang);
-      if (title) section.setAttribute('aria-labelledby', title.id);
-      movePill();
-      if (hasST) window.ScrollTrigger.refresh();
-    };
-    var fromHash = function () { return window.location.hash === '#unete' ? 'es' : null; };
-    select(fromHash() || 'en', false);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(movePill);
-    window.addEventListener('resize', movePill);
-    if (fromHash()) {
-      var land = function () { section.scrollIntoView(); };
-      land();
-      if (document.readyState !== 'complete') window.addEventListener('load', function () { if (window.location.hash === '#unete') land(); }, { once: true });
     }
-    tabs.forEach(function (tab, i) {
-      tab.addEventListener('click', function () { select(tab.getAttribute('data-lang-tab'), false); });
-      tab.addEventListener('keydown', function (e) {
-        var step = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
-        if (!step) return;
-        e.preventDefault();
-        var next = tabs[(i + step + tabs.length) % tabs.length];
-        select(next.getAttribute('data-lang-tab'), true);
-      });
-    });
-    window.addEventListener('hashchange', function () {
-      var lang = fromHash() || (window.location.hash === '#join' ? 'en' : null);
-      if (lang && lang !== current) select(lang, false);
-    });
-    return { select: select, section: section };
-  })();
+    if (hasIO) new IntersectionObserver(function (entries) { tape.classList.toggle('is-off', !entries[0].isIntersecting); }).observe(tape);
+  }
 
-  /* ── in-page links: #join / #unete pick the language first; with smooth scrolling every anchor goes through it ── */
-  $$('a[href*="#"]').forEach(function (link) {
-    if (link.hasAttribute('data-focus-request')) return;
-    var href = samePageHash(link);
-    if (!href) return;
-    link.addEventListener('click', function (e) {
-      var target;
-      var isLang = (href === '#join' || href === '#unete') && langs;
-      if (isLang) {
-        langs.select(href === '#unete' ? 'es' : 'en', false);
-        target = langs.section;
-      } else {
-        target = document.getElementById(href.slice(1));
-      }
-      if (!target) return;
-      var focusJoin = link.hasAttribute('data-focus-join');
-      if (!lenis && !focusJoin && !isLang) return;
-      e.preventDefault();
-      if (window.history && window.history.pushState) window.history.pushState(null, '', href);
-      scrollToEl(target, function () {
-        if (!focusJoin) return;
-        focusQuietly($('input[name="service"]', target));
+  /* ── in-page links: with smooth scrolling every anchor goes through it ── */
+  if (lenis) {
+    $$('a[href*="#"]').forEach(function (link) {
+      if (link.hasAttribute('data-focus-request')) return;
+      var href = samePageHash(link);
+      if (!href) return;
+      link.addEventListener('click', function (e) {
+        var target = document.getElementById(href.slice(1));
+        if (!target) return;
+        e.preventDefault();
+        if (window.history && window.history.pushState) window.history.pushState(null, '', href);
+        scrollToEl(target);
       });
     });
-  });
+  }
 
   /* ── header: the trades menu (hover opens it with a mouse; click, Escape and focus leaving close it).
      Closing while the pointer is still on it keeps it closed until the pointer leaves. ── */
@@ -552,48 +536,54 @@
       .from($$('.trade__ic path', rack), { strokeDashoffset: 1, duration: 0.9, ease: 'power2.inOut', stagger: 0.035, clearProps: 'strokeDashoffset' }, 0.15);
   }
 
-  /* ── the request ticket: each line lights up as its field passes the middle of the screen; step 02 stamps it ── */
+  /* ── the request ticket: one line per step of the form; each line writes itself in as its step passes the middle of
+     the screen, and step 03 stamps it "In review." (on phones the lines write in one after the other) ── */
   var ticket = $('[data-ticket]');
   var stamp = $('[data-stamp]');
-  var fieldRows = $$('[data-field]');
-  var light = function (key, on) {
-    var row = ticketRows[key];
-    if (row) row.classList.toggle('is-on', on);
-    fieldRows.forEach(function (f) { if (f.getAttribute('data-field') === key) f.classList.toggle('is-on', on); });
-  };
   var stampIn = function () {
     if (!stamp) return;
-    gsap.fromTo(stamp, { scale: 1.9, opacity: 0, rotation: -2 }, { scale: 1, opacity: 1, rotation: -8, duration: 0.42, ease: 'power4.in', clearProps: 'transform,opacity', onComplete: function () {
+    gsap.fromTo(stamp, { scale: 1.9, opacity: 0, rotation: -2 }, { scale: 1, opacity: 1, rotation: -8, duration: 0.42, ease: 'power4.in', overwrite: true, clearProps: 'transform,opacity', onComplete: function () {
       if (ticket) gsap.fromTo(ticket, { x: -3, y: 2 }, { x: 0, y: 0, duration: 0.35, ease: 'elastic.out(1.2, 0.4)', clearProps: 'transform' });
     } });
   };
   if (ticket) {
+    var tRows = $$('.ticket__row', ticket);
+    var tVals = tRows.map(function (row) { return $('.ticket__v', row); });
     mm.add('(min-width: 1024px)', function () {
+      var steps = $$('[data-how-step]');
+      gsap.set(tVals, { clipPath: 'inset(0% 100% 0% 0%)' });
       if (stamp) gsap.set(stamp, { opacity: 0 });
-      fieldRows.forEach(function (f) {
-        ST.create({ trigger: f, start: 'top 58%', end: 'bottom 58%', onToggle: function (self) { light(f.getAttribute('data-field'), self.isActive); } });
+      var fill = function (i, on) {
+        tRows.forEach(function (row, k) { row.classList.toggle('is-on', k === (on ? i : i - 1)); });
+        gsap.to(tVals[i], { clipPath: on ? 'inset(0% 0% 0% 0%)' : 'inset(0% 100% 0% 0%)', duration: on ? 0.55 : 0.3, ease: on ? 'power3.out' : 'power2.in', overwrite: true });
+      };
+      steps.forEach(function (step, i) {
+        if (!tVals[i]) return;
+        var last = i === steps.length - 1;
+        ST.create({ trigger: step, start: 'top 62%', end: 'max', onEnter: function () { fill(i, true); if (last) stampIn(); }, onLeaveBack: function () {
+          fill(i, false);
+          if (last && stamp) gsap.to(stamp, { opacity: 0, duration: 0.2, overwrite: true });
+        } });
       });
-      var two = $('[data-step-two]');
-      if (two && stamp) ST.create({ trigger: two, start: 'top 62%', once: true, onEnter: stampIn });
       return function () {
-        Object.keys(ticketRows).forEach(function (k) { light(k, false); });
-        if (stamp) gsap.set(stamp, { clearProps: 'opacity' });
+        gsap.set(tVals, { clearProps: 'clipPath' });
+        tRows.forEach(function (row) { row.classList.remove('is-on'); });
+        if (stamp) gsap.set(stamp, { clearProps: 'opacity,transform' });
       };
     });
     mm.add('(max-width: 1023px)', function () {
-      var rows = $$('.ticket__row', ticket);
       if (stamp) gsap.set(stamp, { opacity: 0 });
       var t2 = gsap.timeline({ scrollTrigger: { trigger: ticket, start: 'top 72%', once: true } });
-      rows.forEach(function (row, i) {
-        t2.call(function () { row.classList.add('is-on'); }, null, 0.18 + i * 0.22)
-          .from($('.ticket__v', row), { clipPath: 'inset(0% 100% 0% 0%)', duration: 0.5, ease: 'power3.out', clearProps: 'clipPath' }, 0.18 + i * 0.22);
+      tRows.forEach(function (row, i) {
+        t2.call(function () { row.classList.add('is-on'); }, null, 0.18 + i * 0.3)
+          .from(tVals[i], { clipPath: 'inset(0% 100% 0% 0%)', duration: 0.5, ease: 'power3.out', clearProps: 'clipPath' }, 0.18 + i * 0.3);
       });
-      t2.call(function () { rows.forEach(function (row) { row.classList.remove('is-on'); }); stampIn(); }, null, 0.18 + rows.length * 0.22 + 0.2);
+      t2.call(function () { tRows.forEach(function (row) { row.classList.remove('is-on'); }); stampIn(); }, null, 0.18 + tRows.length * 0.3 + 0.15);
       return function () { if (stamp) gsap.set(stamp, { clearProps: 'opacity' }); };
     });
   }
 
-  /* ── the bridge: both beams reach out from the ends, the shield sets in the middle like a keystone ── */
+  /* ── the bridge (about): both beams reach out from the ends, the shield sets in the middle like a keystone ── */
   var bridge = $('[data-bridge]');
   if (bridge) {
     var beams = $$('.bridge__beam i', bridge);
@@ -608,12 +598,20 @@
     if (notes.length) btl.from(notes, { opacity: 0, x: function (i) { return i === 1 ? 12 : -12; }, stagger: 0.04, ease: 'none', duration: 0.15 }, 0.85);
   }
 
-  /* ── final: the shield settles under the yard sign ── */
+  /* ── final (home): the red beam runs in from the edge of the screen and the shield drops onto its end ── */
+  var arrive = $('[data-arrive]');
+  if (arrive) {
+    var atl = gsap.timeline({ scrollTrigger: { trigger: arrive, start: 'top 90%', toggleActions: 'play none none reverse' } });
+    atl.from($('.arrive__beam i', arrive), { scaleX: 0, ease: 'expo.inOut', duration: 0.95 }, 0)
+      .from($('.arrive__shield', arrive), { y: -80, opacity: 0, scale: 0.86, rotation: -6, ease: 'back.out(1.5)', duration: 0.6 }, 0.72);
+  }
+
+  /* ── final (inner pages): the shield settles under the yard sign ── */
   var finalShield = $('.final__shield');
   if (finalShield) gsap.from(finalShield, { rotation: -14, scale: 0.7, opacity: 0, duration: 0.9, ease: 'back.out(1.7)', clearProps: 'transform,opacity', scrollTrigger: { trigger: finalShield, start: 'top 92%', once: true } });
 
-  /* ── workers photo: uncovered from the bottom, like a wall going up ── */
-  $$('.wphoto img').forEach(function (img) {
+  /* ── the photo of the crew opening a wall: uncovered from the bottom, like a wall going up ── */
+  $$('.yours__photo img').forEach(function (img) {
     gsap.from(img, { clipPath: 'inset(100% 0% 0% 0%)', duration: 1.2, ease: 'expo.inOut', clearProps: 'clipPath', scrollTrigger: { trigger: img, start: 'top 85%', once: true } });
   });
 
